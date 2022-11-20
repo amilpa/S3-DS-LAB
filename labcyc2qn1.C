@@ -1,123 +1,114 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<math.h>
+#define max 100
+typedef struct{
+	float coeff;
+	int exp;
+}poly;
+poly terms[max];
+int avail=0;
+int starta,startb,finisha,finishb,startd,finishd;
+void polyadd(int starta,int startb,int finisha,int finishb,int startd,int* finishd);
+int main()
+{
+	int i;
+	starta=avail;
+	printf("Enter the number of terms in polynomial1:");
+	scanf("%d",&finisha);
+	finisha--;
+	printf("\nEnter the coeffecients and exponents in DESCENDING order");
+	for(i = starta ; i<=finisha; i++)
+	{
+		printf("\nCoeffecient :");
+		scanf("%f",&terms[i].coeff);
+		printf("Exponent :");
+		scanf("%d", &terms[i].exp);
+		avail++;
+	}
 
-typedef struct link {
-  int coeff;
-  int pow;
-} my_poly;
+	printf("Enter the number of terms in polynomial2:");
+	scanf("%d",&i);
+	finishb = finisha + i;
+	printf("\nEnter the coeffecients and exponents in DESCENDING order");
+	for(i = finisha+1 ; i<=finishb; i++)
+	{
+		printf("\nCoeffecient :");
+		scanf("%f", &terms[i].coeff);
+		printf("Exponent :");
+		scanf("%d", &terms[i].exp);
+		avail++;
+	}
+	//printing first polynomial
+	printf("\nExpression 1 = %.2fx^%d " , terms[0].coeff , terms[0].exp);
+	for(i=1;i<=finisha;i++)
+	{
+		printf("+ %.2fx^%d",terms[i].coeff,terms[i].exp);
+	}    
 
-void create(my_poly *poly, int len, int i) {
+	//printing second polynomial
+	printf("\nExpression 2 = %.2fx^%d " ,terms[finisha+1].coeff , terms[finisha+1].exp );
+	for(i=finisha+2;i<=finishb;i++)
+	{
+		printf("+ %.2fx^%d",terms[i].coeff,terms[i].exp);
+	}
+	printf("\n");
 
-  printf("Enter the elements\n");
+	startd = avail;
+	finishd = avail-1;
+	startb = finisha+1;
+	polyadd(starta,startb,finisha,finishb,startd, &finishd);
+	printf("The resultant expression is: %.2fx^%d" , terms[startd].coeff , terms[startd].exp );
+	for(i=startd+1;i<=finishd;i++){
+		printf("+ %.2fx^%d ",terms[i].coeff,terms[i].exp);
+	}
+	printf("\n");
+	return 0;
 
-  for (i = 0; i < len; i++) {
-    printf("Enter the coefficient:");
-    scanf("%d", &poly[i].coeff);
-
-    printf("Enter the power:");
-    scanf("%d", &poly[i].pow);
-  }
 }
 
-void display(my_poly *poly, int len, int i, int j) {
-  for (i = 0; i < len; i++) {
-    printf(" %dx^%d ", poly[i].coeff, poly[i].pow);
-  }
-  printf("\n");
+void polyadd(int starta,int startb,int finisha,int finishb,int startd,int* finishd){
+	while(starta<=finisha && startb<=finishb)
+	{
+		if(terms[starta].exp == terms[startb].exp)
+		{
+			terms[startd].coeff = terms[starta].coeff + terms[startb].coeff ; 
+			terms[startd].exp =  terms[startb].exp ; 
+			starta++;
+			startb++;
+			startd++;
+			*finishd = *finishd +1 ;
+		}
+		else if (terms[starta].exp > terms[startb].exp) {
+			terms[startd].coeff = terms[starta].coeff ; 
+			terms[startd].exp =  terms[starta].exp ; 
+			starta++;
+			startd++;
+			*finishd = *finishd +1 ;
+		}
+		else if (terms[starta].exp < terms[startb].exp) {
+			terms[startd].coeff = terms[startb].coeff ; 
+			terms[startd].exp =  terms[startb].exp ; 
+			startb++;
+			startd++;
+			*finishd = *finishd +1 ;
+		}
+	}
+	while(starta<=finisha)
+	{
+		terms[startd].exp = terms[starta].exp;
+		terms[startd].coeff = terms[starta].coeff ; 
+		starta++;
+		startd++;
+		*finishd = *finishd +1 ;
+	}
+	while(startb<=finishb)
+	{
+		terms[startd].exp = terms[startb].exp;
+		terms[startd].coeff = terms[startb].coeff ; 
+		startb++;
+		startd++;
+		*finishd = *finishd +1 ;
+	}
 }
 
-int add(my_poly *sum, my_poly *poly1, my_poly *poly2, int len1, int len2, int i,
-        int j, int sumlen) {
-  int sumco = 0;
-  int x = 0;
-  int y = 0;
-  int k = 0;
 
-  while (x < len1 && y < len2) {
-    if (poly1[x].pow == poly2[y].pow) {
-      sum[k].coeff = poly1[x].coeff + poly2[y].coeff;
-      sum[k].pow = poly1[x].pow;
-      x++;
-      y++;
-      k++;
-    }
-
-    else if (poly1[x].pow > poly2[y].pow) {
-
-      sum[k].coeff = poly1[x].coeff;
-      sum[k].pow = poly1[x].pow;
-      x++;
-      k++;
-    }
-
-    else if (poly2[y].pow > poly1[x].pow) {
-
-      sum[k].coeff = poly2[y].coeff;
-      sum[k].pow = poly2[y].pow;
-      y++;
-      k++;
-    }
-  }
-
-  while (x < len1) {
-
-    sum[k].coeff = poly1[x].coeff;
-    sum[k].pow = poly1[x].pow;
-    x++;
-    k++;
-  }
-
-  while (y < len2) {
-
-    sum[k].coeff = poly2[y].coeff;
-    sum[k].pow = poly2[y].pow;
-    y++;
-    k++;
-  }
-
-  return k;
-}
-
-int main(int argc, char const *argv[]) {
-  int len1, len2, i, j, num;
-
-  printf("Enter the length of the first polynomial:\n");
-  scanf("%d", &len1);
-  my_poly poly1[len1];
-  create(poly1, len1, i);
-
-  printf("Enter the length of the second polynomial:\n");
-  scanf("%d", &len2);
-  my_poly poly2[len2];
-  create(poly2, len2, i);
-
-  int sumlen;
-
-  if (len1 > len2) {
-    sumlen = len1;
-  }
-
-  else if (len1 < len2) {
-    sumlen = len2;
-  }
-
-  else {
-    sumlen = len1;
-  }
-
-  my_poly sum[sumlen];
-
-  num = add(sum, poly1, poly2, len1, len2, i, j, sumlen);
-
-  printf("First polynomial is:\n");
-
-  display(poly1, len1, i, j);
-
-  printf("Second polynomial is:\n");
-  display(poly2, len2, i, j);
-
-  printf("Sum is:\n");
-  display(sum, num, i, j);
-
-  return 0;
-}
