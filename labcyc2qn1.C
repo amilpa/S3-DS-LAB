@@ -9,6 +9,7 @@ poly terms[max];
 int avail=0;
 int starta,startb,finisha,finishb,startd,finishd;
 void polyadd(int starta,int startb,int finisha,int finishb,int startd,int* finishd);
+void attach(float coeff , int exp , int index);
 int main()
 {
 	int i;
@@ -71,23 +72,20 @@ void polyadd(int starta,int startb,int finisha,int finishb,int startd,int* finis
 	{
 		if(terms[starta].exp == terms[startb].exp)
 		{
-			terms[startd].coeff = terms[starta].coeff + terms[startb].coeff ; 
-			terms[startd].exp =  terms[startb].exp ; 
+			attach(terms[startb].coeff + terms[starta].coeff, terms[startb].exp, startd);
 			starta++;
 			startb++;
 			startd++;
 			*finishd = *finishd +1 ;
 		}
 		else if (terms[starta].exp > terms[startb].exp) {
-			terms[startd].coeff = terms[starta].coeff ; 
-			terms[startd].exp =  terms[starta].exp ; 
+			attach(terms[starta].coeff, terms[starta].exp, startd);
 			starta++;
 			startd++;
 			*finishd = *finishd +1 ;
 		}
 		else if (terms[starta].exp < terms[startb].exp) {
-			terms[startd].coeff = terms[startb].coeff ; 
-			terms[startd].exp =  terms[startb].exp ; 
+			attach(terms[startb].coeff, terms[startb].exp, startd);
 			startb++;
 			startd++;
 			*finishd = *finishd +1 ;
@@ -95,20 +93,24 @@ void polyadd(int starta,int startb,int finisha,int finishb,int startd,int* finis
 	}
 	while(starta<=finisha)
 	{
-		terms[startd].exp = terms[starta].exp;
-		terms[startd].coeff = terms[starta].coeff ; 
+		attach(terms[starta].coeff, terms[starta].exp, startd);
 		starta++;
 		startd++;
 		*finishd = *finishd +1 ;
 	}
 	while(startb<=finishb)
 	{
-		terms[startd].exp = terms[startb].exp;
-		terms[startd].coeff = terms[startb].coeff ; 
+		attach(terms[startb].coeff, terms[startb].exp, startd);
 		startb++;
 		startd++;
 		*finishd = *finishd +1 ;
 	}
+}
+
+void attach(float coeff , int exp , int index)
+{
+	terms[index].coeff = coeff;
+	terms[index].exp = exp;
 }
 
 
