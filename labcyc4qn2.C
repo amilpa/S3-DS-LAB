@@ -32,7 +32,7 @@ void insertat(linklist **head , int data)
         temp->value = value;
         temp->link = NULL;
         ptr2 = ptr1->link ; 
-        ptr1 = temp;
+        ptr1->link = temp;
         temp->link = ptr2 ; 
     }
     else
