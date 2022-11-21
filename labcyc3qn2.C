@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int stack[20] = {0};
+int stack[4] = {0};
 int top1 = -1;
-int top2 = 20;
+int top2 = 4;
 
 void push(int sta)
 {
     if (sta == 1)
     {
-        if (top1 == 9)
+        if (top1+1 == top2)
         {
             printf("Stack overflow\n");
         }
@@ -27,7 +27,7 @@ void push(int sta)
     else if (sta == 2)
     {
 
-        if (top2 == 10)
+        if (top2-1 == top1)
         {
             printf("Stack overflow\n");
         }
@@ -66,7 +66,7 @@ void pop(int sta)
     else if(sta==2)
     {
 
-        if (top2 == 20)
+        if (top2 == 4)
         {
             printf("Stack is empty\n");
         }
@@ -102,7 +102,7 @@ void display()
     }
     printf("\n\nStack 2\n");
 
-    if (top2 == 20)
+    if (top2 == 4)
     {
         printf("Stack is empty\n");
     }
@@ -110,7 +110,7 @@ void display()
     else
     {
         printf("\nThe stack elements are:\n");
-        for (int i = 19; i >= top2; i--)
+        for (int i = 3; i >= top2; i--)
         {
             printf("%d ", stack[i]);
         }
