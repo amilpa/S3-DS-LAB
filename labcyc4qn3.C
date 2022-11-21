@@ -3,8 +3,7 @@
 void insertat(linklist **head , int data)
 {
     int flag = 0;
-    linklist *ptr1 = *head;
-    linklist *ptr2 = NULL;
+    linklist *ptr = *head;
     if(*head==NULL)
     {
         printf("Linked list has no values\n");
@@ -12,21 +11,17 @@ void insertat(linklist **head , int data)
     }
     else
     {
-        while(ptr1!=NULL)
+        while(ptr!=NULL)
         {
-            if(ptr1->value == data)
+            if(ptr->value == data)
             {
                 flag = 1;
                 break;
             }
-            ptr1 = ptr1->link;
+            ptr = ptr->link;
         }
     }
 
-    if(ptr1==*head)
-    {
-        printf("")
-    }
     if (flag)
     {
         int value;
@@ -34,10 +29,8 @@ void insertat(linklist **head , int data)
         printf("Enter the value to insert into the linked list\n");
         scanf("%d", &value);
         temp->value = value;
-        temp->link = NULL;
-        ptr2 = ptr1 ; 
-        ptr1 = temp;
-        temp->link = ptr2 ; 
+        temp->link = ptr;
+        ptr = temp; 
     }
     else
     {
