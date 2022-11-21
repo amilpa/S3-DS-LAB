@@ -37,12 +37,11 @@ void display(linklist* head)
     printf("\nThe elements of the linked list are:\n");
     // printf("%d " , head->value);
     // printf("%d " , head->link->value);
-    do
+    while(head!=NULL)
     {
         printf("%d " , head->value);
         head = head->link;
     }
-    while(head->link!=NULL);
     printf("\n");
 }
 
@@ -54,9 +53,9 @@ int main()
     while(flag)
     {
         insert(&head);
-        insert(&head);
         display(head);
         printf("Do you want to continue?(Yes(1) or no(0))\n");
+        scanf("%d" , &flag);
     }
 
 }
