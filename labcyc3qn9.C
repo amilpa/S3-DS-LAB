@@ -1,8 +1,24 @@
-#include <stdio.h>
-#include <ctype.h>
-
+//8) Evaluate a postfix/prefix expression.
+#include<stdio.h>
+#include<ctype.h>
+#include<string.h>
 int stack[20];
 int top = -1;
+
+void reverse(char str1[], int index, int size)
+{
+    char temp;
+
+    temp = str1[index];
+    str1[index] = str1[size - index];
+    str1[size - index] = temp;
+
+    if (index == size / 2)
+    {
+        return;
+    }
+    reverse(str1, index + 1, size);
+}
 
 void push(int x)
 {
@@ -16,15 +32,20 @@ int pop()
 
 int main()
 {
-    char exp[20];
+    char exp[100];
     char *e;
-    int n1, n2, n3, num;
-    printf("Enter the expression :: ");
-    scanf("%s", exp);
+    int n1,n2,n3,num,ch;
+    printf("1.Evaluate postfix expression\n");
+    printf("2.Evaluate prefix expression\n");
+    printf("Enter the choice 1/2:\n");
+    scanf("%d",&ch);
+    if (ch==1){
+    printf("Enter the postfix expression :: ");
+    scanf("%s",exp);
     e = exp;
-    while (*e != '\0')
+    while(*e != '\0')
     {
-        if (isdigit(*e))
+        if(isdigit(*e))
         {
             num = *e - 48;
             push(num);
@@ -33,7 +54,7 @@ int main()
         {
             n1 = pop();
             n2 = pop();
-            switch (*e)
+            switch(*e)
             {
             case '+':
             {
@@ -55,8 +76,51 @@ int main()
                 n3 = n2 / n1;
                 break;
             }
-            default:
+            }
+            push(n3);
+        }
+        e++;
+    }
+    printf("\nThe result of expression  =  %d\n\n",pop());
+    return 0;
+     }
+if(ch==2){
+    printf("Enter the prefix expression :: ");
+    scanf("%s",exp);
+    int l=strlen(exp);
+    reverse(exp,0,l-1);
+    e = exp;
+    while(*e != '\0')
+    {
+        if(isdigit(*e))
+        {
+            num = *e - 48;
+            push(num);
+        }
+        else
+        {
+            n1 = pop();
+            n2 = pop();
+            switch(*e)
             {
+            case '+':
+            {
+                n3 = n1 + n2;
+                break;
+            }
+            case '-':
+            {
+                n3 = n2 - n1;
+                break;
+            }
+            case '*':
+            {
+                n3 = n1 * n2;
+                break;
+            }
+            case '/':
+            {
+                n3 = n2 / n1;
                 break;
             }
             }
@@ -64,6 +128,8 @@ int main()
         }
         e++;
     }
-    printf("\nThe result of expression %s  =  %d\n\n", exp, pop());
+    printf("\nThe result of expression=  %d\n\n",pop());
     return 0;
+
+}
 }
