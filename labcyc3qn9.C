@@ -110,7 +110,7 @@ if(ch==2){
             }
             case '-':
             {
-                n3 = n2 - n1;
+                n3 = n1 - n2;
                 break;
             }
             case '*':
