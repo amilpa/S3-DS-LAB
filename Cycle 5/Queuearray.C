@@ -60,7 +60,7 @@ void Display()
     }
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
     int flag = 1;
     int choice;

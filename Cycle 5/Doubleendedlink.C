@@ -5,7 +5,8 @@
 typedef struct node
 {
     int val;
-    struct node* link;
+    struct node* next;
+    struct node* prev;
 }linlist;
 
 linlist* front = NULL ;
@@ -15,20 +16,22 @@ void Insertatfront(int val)
 {
     linlist* temp = (linlist* ) malloc(sizeof(linlist));
     temp->val = val;
-    temp->link = NULL;
+    temp->next = NULL;
     if(front==NULL)
     {
+		temp->prev = NULL;
         front = temp ;
         rear = temp;
     }
     else
     {
         linlist* ptr = front;
-        while(ptr->link!=NULL)
+        while(ptr->next!=NULL)
         {
-            ptr = ptr->link;
+            ptr = ptr->next;
         }
-        ptr->link = temp;
+        ptr->next = temp;
+		temp->prev = ptr;
         rear = temp;
     }
 }
@@ -41,7 +44,9 @@ void Deleteatfront()
     }
     else
     {
-        front = front->link;
+		printf("%d is deleted\n" , front->val);
+        front = front->next;
+		front->prev = NULL;
     }
 }
 
@@ -51,12 +56,12 @@ void Insertatrear(int val)
     temp->val = val;
     if(front==NULL)
     {
-        temp->link = NULL;
+        temp->next = NULL;
         front = temp;
     }
     else
     {
-        temp->link = front;
+        temp->next = front;
         front = temp;
     }
 }
@@ -70,11 +75,20 @@ void Deleteatrear()
     else
     {
         linlist* ptr = front;
-        while(ptr->link!=NULL)
+		linlist* prev = ptr;
+        while(ptr->next!=NULL)
         {
-            ptr = ptr->link ;
+			prev = ptr;
+            ptr = ptr->next ;
         }
-        ptr = NULL;
+		printf("%d is deleted\n" , ptr->val); 
+		if (prev == front) {
+			front = NULL ;
+		}
+		else
+		{
+			prev->next = NULL ;
+		}
     }
 }
 
@@ -92,6 +106,7 @@ void Display()
         while(ptr!=NULL)
         {
             printf( "%d " , ptr->val);
+			ptr = ptr->next ; 
         }
     }
 }
@@ -106,7 +121,7 @@ int main(int argc, char const *argv[])
         printf("\n2.Delete at front");
         printf("\n3.Insert at rear");
         printf("\n4.Delete at rear");
-        printf("\n5.Diplay");
+        printf("\n5.Display");
         printf("\nEnter the choice:\n");
         scanf("%d", &choice);
         if (choice == 1)
