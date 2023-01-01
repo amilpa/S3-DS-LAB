@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int stack[4] = {0};
+const int MAX_SIZE = 4;
+
+int stack[MAX_SIZE] = {0};
 int top1 = -1;
-int top2 = 4;
+int top2 = MAX_SIZE;
 
 void push(int sta)
 {
@@ -66,7 +68,7 @@ void pop(int sta)
     else if(sta==2)
     {
 
-        if (top2 == 4)
+        if (top2 == MAX_SIZE)
         {
             printf("Stack is empty\n");
         }
@@ -102,7 +104,7 @@ void display()
     }
     printf("\n\nStack 2\n");
 
-    if (top2 == 4)
+    if (top2 == MAX_SIZE)
     {
         printf("Stack is empty\n");
     }
@@ -110,7 +112,7 @@ void display()
     else
     {
         printf("\nThe stack elements are:\n");
-        for (int i = 3; i >= top2; i--)
+        for (int i = MAX_SIZE-1; i >= top2; i--)
         {
             printf("%d ", stack[i]);
         }
