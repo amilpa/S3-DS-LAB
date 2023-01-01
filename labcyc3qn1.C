@@ -8,7 +8,9 @@ int top = -1;
 void push()
 {
   if(top==9){
+
     printf("Stack overflow\n");
+
   }
 
   else
