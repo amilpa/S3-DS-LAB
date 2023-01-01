@@ -37,6 +37,8 @@ int main()
     printf("\n");
     e = exp;
     
+    printf("The postfix expression is:\n");
+
     while(*e != '\0')
     {
         if(isalnum(*e))
