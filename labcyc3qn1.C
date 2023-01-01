@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int stack[10]={0};
+const int MAX_SIZE = 3;
+
+int stack[MAX_SIZE]={0};
 int top = -1;
 
 
 void push()
 {
-  if(top==9){
+  if(top==MAX_SIZE-1){
 
     printf("Stack overflow\n");
 
