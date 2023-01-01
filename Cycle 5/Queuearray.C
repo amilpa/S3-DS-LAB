@@ -1,7 +1,7 @@
 #include<stdio.h>
 
 
-const int MAX_SIZE = 10;
+const int MAX_SIZE = 3;
 
 int queue[MAX_SIZE];
 int front = -1;
