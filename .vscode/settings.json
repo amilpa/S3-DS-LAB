@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "labcyc3qn4.C": "cpp"
+        "labcyc3qn4.C": "cpp",
+        "labcyc3qn1.C": "cpp",
+        "labcyc3qn2.C": "cpp",
+        "labcyc3qn6.C": "cpp",
+        "labcyc3qn7.C": "cpp",
+        "labcyc3qn8.C": "cpp"
     }
 }
