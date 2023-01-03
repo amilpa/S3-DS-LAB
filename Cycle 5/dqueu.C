@@ -68,6 +68,7 @@ void dequeueAtFront()
 	else
 	{
     	temp = head->next;
+        printf("%d is deleted\n" , temp->data);
     	head->next = temp->next;
     	temp->next->prev = head;
 
@@ -88,8 +89,8 @@ void dequeueAtRear()
 	}
 	else
 	{
-
     	temp = tail->prev;
+        printf("%d is deleted\n" , temp->data);
     	tail->prev = temp->prev;
     	temp->prev->next = tail;
     	free(temp);
