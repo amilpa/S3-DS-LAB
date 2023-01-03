@@ -44,6 +44,7 @@ void insert(int key,int value)
 {
     int index = hashcode(key);
     int i = index;
+    int probe = 0;
 
     item* new_item = (item*)malloc(sizeof(item));
     new_item->key = key;
@@ -65,11 +66,13 @@ void insert(int key,int value)
             printf("hash table is full no slot is left\n");
             return;
         }
+        probe++;
     }
     array[i].flag=1;
     array[i].data = new_item;
     size++;
     printf("Key (%d) has been inserted\n",key);
+    printf("No of probes taken: %d\n" , probe);
     return;
 }
 
